@@ -1,5 +1,8 @@
 package chapter1;
 
+import chapter1.section10.SafeRunnable;
+import chapter1.section11.TaskRunnable;
+import chapter1.section13.MyThreadFactory;
 import chapter1.section3.MyRunnable;
 import chapter1.section4.MyThread;
 import chapter1.section5.MyRunnable5;
@@ -39,7 +42,57 @@ public class Test {
 
 //        test8();
 
-        test9();
+//        test9();
+
+//        test10();
+
+//        test11();
+
+        test12();
+    }
+
+    private static void test12() {
+        MyThreadFactory myThreadFactory = new MyThreadFactory();
+        Runnable runnable = new chapter1.section13.MyRunnable();
+        for (int i = 0; i < 10; i++) {
+            Thread thread = myThreadFactory.newThread(runnable);
+            thread.start();
+        }
+        myThreadFactory.printStatus();
+    }
+
+    private static void test11() {
+        ThreadGroup threadGroup = new ThreadGroup("group");
+        Runnable taskRunnable = new TaskRunnable();
+        for (int i = 0; i < 5; i++) {
+            Thread thread = new Thread(threadGroup, taskRunnable);
+            thread.start();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Thread[] threads = new Thread[threadGroup.activeCount()];
+        threadGroup.enumerate(threads);
+        for (int i = 0; i < threadGroup.activeCount(); i++) {
+            System.out.println(threads[i].getName() + " " + threads[i].getState());
+        }
+    }
+
+    private static void test10() {
+//        UnsafeRunnable runnable = new UnsafeRunnable();
+        SafeRunnable runnable = new SafeRunnable();
+        for (int i = 0; i < 5; i++) {
+            Thread thread = new Thread(runnable);
+            thread.start();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void test9() {
