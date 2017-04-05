@@ -4,6 +4,9 @@ import chapter2.section2.Cinema;
 import chapter2.section2.SellARunnable;
 import chapter2.section2.SellBRunnable;
 import chapter2.section3.WaitRunnable;
+import chapter2.section4.Consumer;
+import chapter2.section4.EventStorage;
+import chapter2.section4.Producer;
 
 /**
  * Created by Ian.Lu on 2017/3/28.
@@ -14,7 +17,21 @@ public class Test2 {
     public static void main(String[] args) {
 //        test2();
 
-        test3();
+//        test3();
+
+        test4();
+    }
+
+    private static void test4() {
+        EventStorage eventStorage = new EventStorage();
+        Producer producer = new Producer(eventStorage);
+        Consumer consumer = new Consumer(eventStorage);
+
+        Thread thread1 = new Thread(producer);
+        Thread thread2 = new Thread(consumer);
+
+        thread1.start();
+        thread2.start();
 
     }
 
