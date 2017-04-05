@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Ian.Lu on 2017/3/22.
  * Project : Thread
  */
-public class Test {
+public class Test1 {
 
     private static Thread[] threads = new Thread[5];
     private static Thread.State[] states = new Thread.State[5];
