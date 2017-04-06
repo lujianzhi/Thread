@@ -7,6 +7,11 @@ import chapter2.section3.WaitRunnable;
 import chapter2.section4.Consumer;
 import chapter2.section4.EventStorage;
 import chapter2.section4.Producer;
+import chapter2.section5.PrintQueue;
+import chapter2.section5.PrintRunnable;
+import chapter2.section6.PriceObj;
+import chapter2.section6.ReadPriceRunnable;
+import chapter2.section6.WritePriceRunnable;
 
 /**
  * Created by Ian.Lu on 2017/3/28.
@@ -19,7 +24,39 @@ public class Test2 {
 
 //        test3();
 
-        test4();
+//        test4();
+
+//        test5();
+
+        test6();
+    }
+
+    private static void test6() {
+        PriceObj priceObj = new PriceObj();
+        ReadPriceRunnable readPriceRunnable = new ReadPriceRunnable(priceObj);
+        WritePriceRunnable writePriceRunnable = new WritePriceRunnable(priceObj);
+
+        for (int i = 0; i < 10; i++) {
+            Thread thread = new Thread(new ReadPriceRunnable(priceObj));
+            thread.start();
+        }
+
+        Thread writeThread = new Thread(writePriceRunnable);
+        writeThread.start();
+    }
+
+    private static void test5() {
+        PrintQueue printQueue = new PrintQueue();
+        PrintRunnable printRunnable = new PrintRunnable(printQueue);
+
+        Thread[] threads = new Thread[10];
+        for (int i = 0; i < 10; i++) {
+            threads[i] = new Thread(printRunnable);
+        }
+
+        for (Thread thread : threads) {
+            thread.start();
+        }
     }
 
     private static void test4() {
